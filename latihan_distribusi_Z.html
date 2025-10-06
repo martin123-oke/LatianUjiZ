@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Distribusi Z</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .quiz-container {
+            padding: 40px;
+        }
+
+        .question-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-left: 5px solid #2193b0;
+            transition: transform 0.2s;
+        }
+
+        .question-card:hover {
+            transform: translateX(5px);
+        }
+
+        .question-number {
+            color: #2193b0;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: #2193b0;
+            box-shadow: 0 0 0 3px rgba(33, 147, 176, 0.1);
+        }
+
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .result.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .result.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-check {
+            background: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%);
+            color: white;
+        }
+
+        .btn-check:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(33, 147, 176, 0.4);
+        }
+
+        .btn-reset {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-reset:hover {
+            background: #5a6268;
+        }
+
+        .score-board {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .score-board h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .score-board p {
+            font-size: 18px;
+        }
+
+        .formula-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .formula-box h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .formula {
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            color: #333;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Quiz Distribusi Z</h1>
+            <p>10 Soal Hitungan Statistika - Distribusi Normal Standar</p>
+        </div>
+
+        <div class="quiz-container">
+            <div class="formula-box">
+                <h3>📐 Rumus Z-Score:</h3>
+                <div class="formula">Z = (X - μ) / σ</div>
+                <p style="text-align: center; margin-top: 10px; color: #856404;">
+                    <small>X = nilai, μ = rata-rata, σ = standar deviasi</small>
+                </p>
+            </div>
+
+            <div class="score-board" id="scoreBoard">
+                <h2>🎯 Skor Anda</h2>
+                <p id="scoreText"></p>
+            </div>
+
+            <div id="questionsContainer"></div>
+
+            <div class="buttons">
+                <button class="btn btn-check" onclick="checkAnswers()">✓ Periksa Jawaban</button>
+                <button class="btn btn-reset" onclick="resetQuiz()">↻ Reset Quiz</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                no: 1,
+                text: "Tinggi badan mahasiswa berdistribusi normal dengan rata-rata 165 cm dan standar deviasi 8 cm. Berapa nilai Z-score untuk mahasiswa dengan tinggi 173 cm?",
+                answer: 1,
+                tolerance: 0.01
+            },
+            {
+                no: 2,
+                text: "Nilai ujian matematika memiliki rata-rata 75 dan standar deviasi 10. Seorang siswa mendapat nilai 60. Berapa Z-score siswa tersebut?",
+                answer: -1.5,
+                tolerance: 0.01
+            },
+            {
+                no: 3,
+                text: "Berat badan bayi baru lahir rata-rata 3.2 kg dengan standar deviasi 0.5 kg. Bayi dengan berat 4.2 kg memiliki Z-score berapa?",
+                answer: 2,
+                tolerance: 0.01
+            },
+            {
+                no: 4,
+                text: "Waktu tempuh perjalanan rata-rata 45 menit dengan standar deviasi 6 menit. Jika seseorang sampai dalam 39 menit, berapa Z-score nya?",
+                answer: -1,
+                tolerance: 0.01
+            },
+            {
+                no: 5,
+                text: "IQ berdistribusi normal dengan μ = 100 dan σ = 15. Berapa Z-score untuk seseorang dengan IQ 130?",
+                answer: 2,
+                tolerance: 0.01
+            },
+            {
+                no: 6,
+                text: "Jika Z-score = 1.5, rata-rata = 50, dan standar deviasi = 8, berapakah nilai X?",
+                answer: 62,
+                tolerance: 0.1
+            },
+            {
+                no: 7,
+                text: "Harga saham rata-rata Rp 1.500 dengan standar deviasi Rp 200. Saham seharga Rp 1.300 memiliki Z-score berapa?",
+                answer: -1,
+                tolerance: 0.01
+            },
+            {
+                no: 8,
+                text: "Suhu harian rata-rata 28°C dengan standar deviasi 3°C. Hari dengan suhu 34°C memiliki Z-score berapa?",
+                answer: 2,
+                tolerance: 0.01
+            },
+            {
+                no: 9,
+                text: "Jika X = 85, μ = 80, dan Z = 0.5, berapakah standar deviasi (σ)?",
+                answer: 10,
+                tolerance: 0.1
+            },
+            {
+                no: 10,
+                text: "Nilai rata-rata kelas 70 dengan standar deviasi 12. Berapa Z-score untuk nilai 82?",
+                answer: 1,
+                tolerance: 0.01
+            }
+        ];
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            questions.forEach(q => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.innerHTML = `
+                    <div class="question-number">Soal ${q.no}</div>
+                    <div class="question-text">${q.text}</div>
+                    <input type="number" step="0.01" class="answer-input" id="answer${q.no}" 
+                           placeholder="Masukkan jawaban Anda...">
+                    <div class="result" id="result${q.no}"></div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function checkAnswers() {
+            let correct = 0;
+            
+            questions.forEach(q => {
+                const userAnswer = parseFloat(document.getElementById(`answer${q.no}`).value);
+                const resultDiv = document.getElementById(`result${q.no}`);
+                
+                if (isNaN(userAnswer)) {
+                    resultDiv.className = 'result incorrect';
+                    resultDiv.style.display = 'block';
+                    resultDiv.textContent = '❌ Mohon isi jawaban!';
+                } else if (Math.abs(userAnswer - q.answer) <= q.tolerance) {
+                    resultDiv.className = 'result correct';
+                    resultDiv.style.display = 'block';
+                    resultDiv.textContent = `✓ Benar! Jawaban: ${q.answer}`;
+                    correct++;
+                } else {
+                    resultDiv.className = 'result incorrect';
+                    resultDiv.style.display = 'block';
+                    resultDiv.textContent = `✗ Salah! Jawaban yang benar: ${q.answer}`;
+                }
+            });
+
+            const scoreBoard = document.getElementById('scoreBoard');
+            const scoreText = document.getElementById('scoreText');
+            scoreBoard.style.display = 'block';
+            scoreText.textContent = `Anda menjawab ${correct} dari ${questions.length} soal dengan benar (${(correct/questions.length*100).toFixed(0)}%)`;
+            
+            scoreBoard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function resetQuiz() {
+            questions.forEach(q => {
+                document.getElementById(`answer${q.no}`).value = '';
+                const resultDiv = document.getElementById(`result${q.no}`);
+                resultDiv.style.display = 'none';
+            });
+            
+            document.getElementById('scoreBoard').style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        renderQuestions();
+    </script>
+</body>
+</html>
