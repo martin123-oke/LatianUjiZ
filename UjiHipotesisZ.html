@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hipotesis Uji Z</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeIn 0.6s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .section:nth-child(1) { animation-delay: 0.1s; }
+        .section:nth-child(2) { animation-delay: 0.2s; }
+        .section:nth-child(3) { animation-delay: 0.3s; }
+        .section:nth-child(4) { animation-delay: 0.4s; }
+        .section:nth-child(5) { animation-delay: 0.5s; }
+
+        h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+            border-left: 5px solid #667eea;
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin: 20px 0 10px 0;
+            font-size: 1.3em;
+        }
+
+        .formula {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-size: 1.2em;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+        }
+
+        .info-box {
+            background: #e8eaf6;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+        }
+
+        .example-box {
+            background: #fff3e0;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #ff9800;
+        }
+
+        .calculator {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+
+        .calculator h3 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        button {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        .result {
+            background: white;
+            color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .steps {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        ul, ol {
+            margin-left: 25px;
+            margin-top: 10px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Hipotesis Uji Z</h1>
+            <p>Panduan Lengkap Uji Statistik untuk Sampel Besar</p>
+        </header>
+
+        <div class="content">
+            <div class="section">
+                <h2>🎯 Pengertian Uji Z</h2>
+                <p>Uji Z adalah uji statistik parametrik yang digunakan untuk menguji hipotesis tentang rata-rata populasi ketika:</p>
+                <ul>
+                    <li>Ukuran sampel besar (n ≥ 30)</li>
+                    <li>Standar deviasi populasi (σ) diketahui</li>
+                    <li>Data berdistribusi normal atau mendekati normal</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>📐 Rumus Uji Z</h2>
+                <div class="formula">
+                    Z = (x̄ - μ₀) / (σ / √n)
+                </div>
+                <div class="info-box">
+                    <strong>Keterangan:</strong>
+                    <ul>
+                        <li><strong>Z</strong> = Nilai statistik uji Z</li>
+                        <li><strong>x̄</strong> = Rata-rata sampel</li>
+                        <li><strong>μ₀</strong> = Rata-rata populasi yang dihipotesiskan</li>
+                        <li><strong>σ</strong> = Standar deviasi populasi</li>
+                        <li><strong>n</strong> = Ukuran sampel</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🔍 Jenis-jenis Uji Z</h2>
+                
+                <h3>1. Uji Dua Sisi (Two-tailed test)</h3>
+                <p>Digunakan ketika hipotesis alternatif menyatakan bahwa parameter populasi berbeda (tidak sama dengan) nilai yang dihipotesiskan.</p>
+                <ul>
+                    <li>H₀: μ = μ₀</li>
+                    <li>H₁: μ ≠ μ₀</li>
+                </ul>
+
+                <h3>2. Uji Sisi Kanan (Right-tailed test)</h3>
+                <p>Digunakan ketika hipotesis alternatif menyatakan bahwa parameter populasi lebih besar dari nilai yang dihipotesiskan.</p>
+                <ul>
+                    <li>H₀: μ ≤ μ₀</li>
+                    <li>H₁: μ > μ₀</li>
+                </ul>
+
+                <h3>3. Uji Sisi Kiri (Left-tailed test)</h3>
+                <p>Digunakan ketika hipotesis alternatif menyatakan bahwa parameter populasi lebih kecil dari nilai yang dihipotesiskan.</p>
+                <ul>
+                    <li>H₀: μ ≥ μ₀</li>
+                    <li>H₁: μ < μ₀</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>📝 Langkah-langkah Pengujian</h2>
+                <ol>
+                    <li><strong>Merumuskan Hipotesis</strong> - Tentukan H₀ dan H₁</li>
+                    <li><strong>Menentukan Tingkat Signifikansi (α)</strong> - Biasanya 0.05 atau 0.01</li>
+                    <li><strong>Menentukan Kriteria Pengujian</strong> - Tentukan nilai Z tabel</li>
+                    <li><strong>Menghitung Nilai Z hitung</strong> - Gunakan rumus uji Z</li>
+                    <li><strong>Membuat Keputusan</strong> - Bandingkan Z hitung dengan Z tabel</li>
+                    <li><strong>Menarik Kesimpulan</strong> - Terima atau tolak H₀</li>
+                </ol>
+            </div>
+
+            <div class="section">
+                <h2>📊 Tabel Nilai Z Kritis</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tingkat Signifikansi (α)</th>
+                            <th>Uji Dua Sisi</th>
+                            <th>Uji Satu Sisi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>0.10</td>
+                            <td>±1.645</td>
+                            <td>1.282</td>
+                        </tr>
+                        <tr>
+                            <td>0.05</td>
+                            <td>±1.96</td>
+                            <td>1.645</td>
+                        </tr>
+                        <tr>
+                            <td>0.01</td>
+                            <td>±2.576</td>
+                            <td>2.326</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2>💡 Contoh Soal</h2>
+                <div class="example-box">
+                    <strong>Soal:</strong>
+                    <p>Seorang peneliti ingin mengetahui apakah rata-rata tinggi badan mahasiswa di suatu universitas berbeda dari 165 cm. Diketahui standar deviasi populasi 10 cm. Dari sampel 100 mahasiswa, diperoleh rata-rata tinggi badan 167 cm. Dengan α = 0.05, apakah ada perbedaan yang signifikan?</p>
+                    
+                    <div class="steps">
+                        <strong>Penyelesaian:</strong>
+                        <ol>
+                            <li>H₀: μ = 165 cm, H₁: μ ≠ 165 cm (uji dua sisi)</li>
+                            <li>α = 0.05, Z tabel = ±1.96</li>
+                            <li>Z hitung = (167 - 165) / (10 / √100) = 2 / 1 = 2</li>
+                            <li>|Z hitung| = 2 > 1.96, maka tolak H₀</li>
+                            <li><strong>Kesimpulan:</strong> Ada perbedaan signifikan antara rata-rata tinggi badan mahasiswa dengan 165 cm</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="calculator">
+                    <h3>🧮 Kalkulator Uji Z</h3>
+                    <div class="input-group">
+                        <label>Rata-rata Sampel (x̄):</label>
+                        <input type="number" id="xBar" placeholder="Contoh: 167" step="0.01">
+                    </div>
+                    <div class="input-group">
+                        <label>Rata-rata Populasi (μ₀):</label>
+                        <input type="number" id="mu0" placeholder="Contoh: 165" step="0.01">
+                    </div>
+                    <div class="input-group">
+                        <label>Standar Deviasi Populasi (σ):</label>
+                        <input type="number" id="sigma" placeholder="Contoh: 10" step="0.01">
+                    </div>
+                    <div class="input-group">
+                        <label>Ukuran Sampel (n):</label>
+                        <input type="number" id="n" placeholder="Contoh: 100" min="1">
+                    </div>
+                    <div class="input-group">
+                        <label>Jenis Uji:</label>
+                        <select id="testType">
+                            <option value="two">Dua Sisi</option>
+                            <option value="right">Sisi Kanan</option>
+                            <option value="left">Sisi Kiri</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Tingkat Signifikansi (α):</label>
+                        <select id="alpha">
+                            <option value="0.10">0.10</option>
+                            <option value="0.05" selected>0.05</option>
+                            <option value="0.01">0.01</option>
+                        </select>
+                    </div>
+                    <button onclick="calculateZ()">Hitung Uji Z</button>
+                    
+                    <div class="result" id="result">
+                        <h4>Hasil Perhitungan:</h4>
+                        <div id="resultContent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateZ() {
+            const xBar = parseFloat(document.getElementById('xBar').value);
+            const mu0 = parseFloat(document.getElementById('mu0').value);
+            const sigma = parseFloat(document.getElementById('sigma').value);
+            const n = parseFloat(document.getElementById('n').value);
+            const testType = document.getElementById('testType').value;
+            const alpha = parseFloat(document.getElementById('alpha').value);
+
+            if (isNaN(xBar) || isNaN(mu0) || isNaN(sigma) || isNaN(n)) {
+                alert('Mohon isi semua nilai dengan benar!');
+                return;
+            }
+
+            if (sigma <= 0 || n <= 0) {
+                alert('Standar deviasi dan ukuran sampel harus lebih besar dari 0!');
+                return;
+            }
+
+            const zHitung = (xBar - mu0) / (sigma / Math.sqrt(n));
+            
+            let zTabel, kriteria;
+            if (testType === 'two') {
+                if (alpha === 0.10) zTabel = 1.645;
+                else if (alpha === 0.05) zTabel = 1.96;
+                else zTabel = 2.576;
+                kriteria = `|Z hitung| ${Math.abs(zHitung) > zTabel ? '>' : '≤'} ${zTabel}`;
+            } else {
+                if (alpha === 0.10) zTabel = 1.282;
+                else if (alpha === 0.05) zTabel = 1.645;
+                else zTabel = 2.326;
+                if (testType === 'right') {
+                    kriteria = `Z hitung ${zHitung > zTabel ? '>' : '≤'} ${zTabel}`;
+                } else {
+                    kriteria = `Z hitung ${zHitung < -zTabel ? '<' : '≥'} ${-zTabel}`;
+                }
+            }
+
+            let keputusan;
+            if (testType === 'two') {
+                keputusan = Math.abs(zHitung) > zTabel ? 'Tolak H₀' : 'Terima H₀';
+            } else if (testType === 'right') {
+                keputusan = zHitung > zTabel ? 'Tolak H₀' : 'Terima H₀';
+            } else {
+                keputusan = zHitung < -zTabel ? 'Tolak H₀' : 'Terima H₀';
+            }
+
+            const jenisUji = testType === 'two' ? 'Dua Sisi' : testType === 'right' ? 'Sisi Kanan' : 'Sisi Kiri';
+
+            const resultContent = `
+                <p><strong>Jenis Uji:</strong> ${jenisUji}</p>
+                <p><strong>Z hitung:</strong> ${zHitung.toFixed(4)}</p>
+                <p><strong>Z tabel (α = ${alpha}):</strong> ${testType === 'two' ? '±' : ''}${zTabel}</p>
+                <p><strong>Kriteria:</strong> ${kriteria}</p>
+                <p><strong>Keputusan:</strong> <span style="color: ${keputusan === 'Tolak H₀' ? '#f44336' : '#4caf50'}; font-weight: bold;">${keputusan}</span></p>
+                <p><strong>Kesimpulan:</strong> ${keputusan === 'Tolak H₀' ? 
+                    'Ada perbedaan yang signifikan antara rata-rata sampel dengan rata-rata populasi yang dihipotesiskan.' : 
+                    'Tidak ada perbedaan yang signifikan antara rata-rata sampel dengan rata-rata populasi yang dihipotesiskan.'}</p>
+            `;
+
+            document.getElementById('resultContent').innerHTML = resultContent;
+            document.getElementById('result').classList.add('show');
+        }
+    </script>
+</body>
+</html>
