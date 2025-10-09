@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soal Esai Uji Hipotesis Z</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .instructions {
+            background: #e8eaf6;
+            padding: 25px;
+            margin: 30px;
+            border-radius: 12px;
+            border-left: 5px solid #667eea;
+        }
+
+        .instructions h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .instructions ul {
+            margin-left: 25px;
+            margin-top: 10px;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .question-card {
+            background: #ffffff;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+            border-color: #667eea;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-size: 1.1em;
+            color: #333;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .data-box {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #764ba2;
+        }
+
+        .data-box strong {
+            color: #667eea;
+        }
+
+        .answer-area {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #e0e0e0;
+        }
+
+        .answer-label {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.05em;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 1em;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+            }
+            
+            .question-card {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📝 Soal Esai Uji Hipotesis Z</h1>
+            <p>Ujian Statistika - Distribusi Normal</p>
+        </header>
+
+        <div class="instructions">
+            <h2>📋 Petunjuk Pengerjaan</h2>
+            <ul>
+                <li>Bacalah setiap soal dengan teliti</li>
+                <li>Kerjakan semua tahapan uji hipotesis secara lengkap</li>
+                <li>Tuliskan hipotesis nol (H₀) dan hipotesis alternatif (H₁)</li>
+                <li>Hitung nilai statistik uji Z dengan rumus yang tepat</li>
+                <li>Tentukan nilai kritis dan daerah penolakan</li>
+                <li>Buatlah kesimpulan berdasarkan hasil perhitungan</li>
+                <li>Tunjukkan langkah-langkah pengerjaan dengan jelas</li>
+            </ul>
+        </div>
+
+        <div class="content">
+            <!-- Soal 1 -->
+            <div class="question-card">
+                <div class="question-number">Soal 1</div>
+                <div class="question-text">
+                    Seorang produsen baterai mengklaim bahwa rata-rata masa pakai baterai yang diproduksinya adalah 40 jam. Untuk menguji klaim tersebut, dilakukan pengujian terhadap 50 baterai.
+                    <div class="data-box">
+                        <strong>Data yang diperoleh:</strong><br>
+                        • Rata-rata masa pakai sampel: 38.5 jam<br>
+                        • Standar deviasi populasi: 5 jam<br>
+                        • Tingkat signifikansi: α = 0.05
+                    </div>
+                    Ujilah apakah klaim produsen tersebut dapat diterima atau ditolak! Gunakan uji dua sisi.
+                </div>
+                <div class="answer-area">
+                    <div class="answer-label">Jawaban:</div>
+                    <textarea placeholder="Tuliskan jawaban Anda di sini..."></textarea>
+                </div>
+            </div>
+
+            <!-- Soal 2 -->
+            <div class="question-card">
+                <div class="question-number">Soal 2</div>
+                <div class="question-text">
+                    Sebuah perusahaan minuman ringan menyatakan bahwa volume rata-rata isi botol minumannya adalah 500 ml. Seorang konsumen mencurigai bahwa volume sebenarnya kurang dari yang tertera.
+                    <div class="data-box">
+                        <strong>Data sampel:</strong><br>
+                        • Jumlah sampel: 60 botol<br>
+                        • Rata-rata volume sampel: 495 ml<br>
+                        • Standar deviasi populasi: 12 ml<br>
+                        • Tingkat signifikansi: α = 0.01
+                    </div>
+                    Ujilah apakah kecurigaan konsumen tersebut beralasan! Gunakan uji sisi kiri.
+                </div>
+                <div class="answer-area">
+                    <div class="answer-label">Jawaban:</div>
+                    <textarea placeholder="Tuliskan jawaban Anda di sini..."></textarea>
+                </div>
+            </div>
+
+            <!-- Soal 3 -->
+            <div class="question-card">
+                <div class="question-number">Soal 3</div>
+                <div class="question-text">
+                    Seorang peneliti ingin menguji apakah program pelatihan baru dapat meningkatkan skor rata-rata karyawan di atas standar perusahaan yaitu 75.
+                    <div class="data-box">
+                        <strong>Data setelah pelatihan:</strong><br>
+                        • Jumlah karyawan yang dilatih: 80 orang<br>
+                        • Rata-rata skor: 78.5<br>
+                        • Standar deviasi populasi: 8<br>
+                        • Tingkat signifikansi: α = 0.05
+                    </div>
+                    Apakah program pelatihan tersebut terbukti efektif meningkatkan skor? Gunakan uji sisi kanan.
+                </div>
+                <div class="answer-area">
+                    <div class="answer-label">Jawaban:</div>
+                    <textarea placeholder="Tuliskan jawaban Anda di sini..."></textarea>
+                </div>
+            </div>
+
+            <!-- Soal 4 -->
+            <div class="question-card">
+                <div class="question-number">Soal 4</div>
+                <div class="question-text">
+                    Sebuah universitas mengklaim bahwa rata-rata IPK mahasiswanya adalah 3.2. Untuk memverifikasi klaim ini, dilakukan survei terhadap sejumlah mahasiswa secara acak.
+                    <div class="data-box">
+                        <strong>Hasil survei:</strong><br>
+                        • Ukuran sampel: 100 mahasiswa<br>
+                        • Rata-rata IPK sampel: 3.15<br>
+                        • Standar deviasi populasi: 0.4<br>
+                        • Tingkat signifikansi: α = 0.10
+                    </div>
+                    Apakah ada perbedaan signifikan antara rata-rata IPK yang diklaim dengan hasil survei?
+                </div>
+                <div class="answer-area">
+                    <div class="answer-label">Jawaban:</div>
+                    <textarea placeholder="Tuliskan jawaban Anda di sini..."></textarea>
+                </div>
+            </div>
+
+            <!-- Soal 5 -->
+            <div class="question-card">
+                <div class="question-number">Soal 5</div>
+                <div class="question-text">
+                    Seorang ahli gizi menyatakan bahwa rata-rata kandungan kalori dalam sebuah burger fast food adalah maksimal 650 kalori. Untuk menguji pernyataan ini, dilakukan pengukuran kandungan kalori pada beberapa sampel burger.
+                    <div class="data-box">
+                        <strong>Hasil pengukuran:</strong><br>
+                        • Jumlah sampel: 45 burger<br>
+                        • Rata-rata kalori: 670 kalori<br>
+                        • Standar deviasi populasi: 50 kalori<br>
+                        • Tingkat signifikansi: α = 0.05
+                    </div>
+                    Ujilah apakah rata-rata kandungan kalori melebihi pernyataan ahli gizi tersebut!
+                </div>
+                <div class="answer-area">
+                    <div class="answer-label">Jawaban:</div>
+                    <textarea placeholder="Tuliskan jawaban Anda di sini..."></textarea>
+                </div>
+            </div>
+
+            <!-- Soal 6 -->
+            <div class="question-card">
+                <div class="question-number">Soal 6</div>
+                <div class="question-text">
+                    Sebuah pabrik chip komputer mengklaim bahwa tingkat kecacatan produknya tidak melebihi 2%. Dalam inspeksi kualitas terhadap 500 chip, ditemukan 15 chip yang cacat.
+                    <div class="data-box">
+                        <strong>Data inspeksi:</strong><br>
+                        • Total chip yang diperiksa: 500 chip<br>
+                        • Jumlah chip cacat: 15 chip<br>
+                        • Proporsi cacat sampel: 0.03 (3%)<br>
+                        • Standar deviasi proporsi: 0.007<br>
+                        • Tingkat signifikansi: α = 0.01
+                    </div>
+                    Ujilah apakah tingkat kecacatan produk melebihi klaim pabrik! (Gunakan p₀ = 0.02)
+                </div>
+                <div class="answer-area">
+                    <div class="answer-label">Jawaban:</div>
+                    <textarea placeholder="Tuliskan jawaban Anda di sini..."></textarea>
+                </div>
+            </div>
+
+            <!-- Soal 7 -->
+            <div class="question-card">
+                <div class="question-number">Soal 7</div>
+                <div class="question-text">
+                    Seorang manajer toko online ingin mengetahui apakah waktu pengiriman rata-rata berbeda dari standar 3 hari. Ia mengambil data dari 75 pengiriman terakhir.
+                    <div class="data-box">
+                        <strong>Data pengiriman:</strong><br>
+                        • Jumlah sampel: 75 pengiriman<br>
+                        • Rata-rata waktu pengiriman: 3.4 hari<br>
+                        • Standar deviasi populasi: 1.2 hari<br>
+                        • Tingkat signifikansi: α = 0.05
+                    </div>
+                    Apakah waktu pengiriman berbeda secara signifikan dari standar 3 hari?
+                </div>
+                <div class="answer-area">
+                    <div class="answer-label">Jawaban:</div>
+                    <textarea placeholder="Tuliskan jawaban Anda di sini..."></textarea>
+                </div>
+            </div>
+
+            <!-- Soal 8 -->
+            <div class="question-card">
+                <div class="question-number">Soal 8</div>
+                <div class="question-text">
+                    Sebuah rumah sakit mengklaim bahwa waktu tunggu rata-rata pasien di unit gawat darurat adalah 25 menit. Seorang peneliti menduga bahwa waktu tunggu sebenarnya lebih lama dari yang diklaim.
+                    <div class="data-box">
+                        <strong>Data penelitian:</strong><br>
+                        • Jumlah pasien yang diamati: 90 pasien<br>
+                        • Rata-rata waktu tunggu: 27.5 menit<br>
+                        • Standar deviasi populasi: 6 menit<br>
+                        • Tingkat signifikansi: α = 0.01
+                    </div>
+                    Ujilah apakah dugaan peneliti tersebut terbukti benar!
+                </div>
+                <div class="answer-area">
+                    <div class="answer-label">Jawaban:</div>
+                    <textarea placeholder="Tuliskan jawaban Anda di sini..."></textarea>
+                </div>
+            </div>
+
+            <!-- Soal 9 -->
+            <div class="question-card">
+                <div class="question-number">Soal 9</div>
+                <div class="question-text">
+                    Sebuah perusahaan telekomunikasi menyatakan bahwa kecepatan internet rata-rata yang mereka berikan adalah 50 Mbps. Sebuah lembaga konsumen melakukan pengujian independen untuk memverifikasi klaim ini.
+                    <div class="data-box">
+                        <strong>Hasil pengujian:</strong><br>
+                        • Jumlah lokasi yang diuji: 120 titik<br>
+                        • Rata-rata kecepatan: 48.2 Mbps<br>
+                        • Standar deviasi populasi: 7.5 Mbps<br>
+                        • Tingkat signifikansi: α = 0.05
+                    </div>
+                    Apakah terdapat perbedaan yang signifikan antara klaim perusahaan dengan hasil pengujian?
+                </div>
+                <div class="answer-area">
+                    <div class="answer-label">Jawaban:</div>
+                    <textarea placeholder="Tuliskan jawaban Anda di sini..."></textarea>
+                </div>
+            </div>
+
+            <!-- Soal 10 -->
+            <div class="question-card">
+                <div class="question-number">Soal 10</div>
+                <div class="question-text">
+                    Seorang psikolog ingin menguji apakah program terapi baru dapat menurunkan tingkat kecemasan pasien di bawah skor standar 60.
+                    <div class="data-box">
+                        <strong>Data setelah terapi:</strong><br>
+                        • Jumlah pasien: 65 orang<br>
+                        • Rata-rata skor kecemasan: 56.8<br>
+                        • Standar deviasi populasi: 10<br>
+                        • Tingkat signifikansi: α = 0.05
+                    </div>
+                    Ujilah apakah program terapi tersebut efektif menurunkan tingkat kecemasan di bawah skor standar!
+                </div>
+                <div class="answer-area">
+                    <div class="answer-label">Jawaban:</div>
+                    <textarea placeholder="Tuliskan jawaban Anda di sini..."></textarea>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            <p><strong>Selamat Mengerjakan!</strong></p>
+            <p>Kerjakan dengan teliti dan tunjukkan semua langkah perhitungan</p>
+        </div>
+    </div>
+</body>
+</html>
